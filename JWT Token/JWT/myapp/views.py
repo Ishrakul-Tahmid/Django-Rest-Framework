@@ -45,3 +45,22 @@ class DashboardView(APIView):
             'message': 'Welcome to the dashboard!',
             'user': user_serializer.data
         }, status=200)
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            # Get the refresh token from the request header
+            refresh_token = request.data.get('refresh_token')
+
+            if refresh_token:
+                token = RefreshToken(refresh_token)
+                # Blacklist the token so it can't be used again
+                token.blacklist()
+
+                return Response({"message": "Logged out successfully"}, status=200)
+            else:
+                return Response({"error": "Refresh token not provided"}, status=400)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)

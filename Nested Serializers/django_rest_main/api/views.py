@@ -11,6 +11,10 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, mixins, viewsets
 
+# for filtering
+from django_filters.rest_framework import DjangoFilterBackend
+from .filters import EmployeeFilter
+
 
 @api_view(['GET', 'POST'])
 def studentsView(request):
@@ -166,3 +170,5 @@ class EmployeeViewSet(viewsets.ViewSet):
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = EmployeeFilter
