@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'api', 
     'employees',
     'django_filters',
+    'posts',
+    'categories',
 ]
 
 REST_FRAMEWORK = {
